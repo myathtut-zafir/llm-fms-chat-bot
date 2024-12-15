@@ -1,3 +1,4 @@
+from typing import Set
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,8 +12,16 @@ from langchain_community.document_loaders import PyPDFLoader,UnstructuredExcelLo
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import CharacterTextSplitter
 
+def create_sources_string(source_urls: Set[str]) -> str:
+    if not source_urls:
+        return ""
+    sources_list = list(source_urls)
+    sources_list.sort()
+    sources_string = "sources:\n"
+    for i, source in enumerate(sources_list):
+        sources_string += f"{i+1}. {source}\n"
+    return sources_string
 
-# llm=ChatOllama(temperature=0, model="llama3.2", max_tokens=500)
 if __name__=='__main__':
     pdf_path="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/FMS MY.pdf"
     loader=PyPDFLoader(file_path=pdf_path)
@@ -39,7 +48,15 @@ if __name__=='__main__':
     
     retrieval_chain=create_retrieval_chain(retriever=new_vs_store.as_retriever(),combine_docs_chain=combine_docs)
     
-    result=retrieval_chain.invoke(input={"input":"explain me the 'Application Submission to Settlement' flow."})
-    print(result["answer"])
+    result=retrieval_chain.invoke(input={"input":"when can we generate'Vehicle Statement'?"})
+    sources = set(
+            [doc.metadata["source"] for doc in result["context"]]
+        )
+    formatted_response = (
+            f"{result['answer']} \n\n {create_sources_string(sources)}"
+        )
+
+    print(formatted_response)
+    # print(result["context"])
 
 
