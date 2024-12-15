@@ -18,6 +18,8 @@ langchain-community = "*"
 black = "*"
 langchain-ollama = "*"
 transformers = "*"
+networkx = "*"
+openpyxl = "*"
 
 [dev-packages]
 
