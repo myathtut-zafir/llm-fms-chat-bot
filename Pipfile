@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 python-dotenv = "*"
 langchain = "*"
-streamlit = "*"
 unstructured = "*"
 tiktoken = "*"
 faiss-cpu = "*"
@@ -20,6 +19,8 @@ langchain-ollama = "*"
 transformers = "*"
 networkx = "*"
 openpyxl = "*"
+streamlit = "*"
+streamlit-chat = "*"
 
 [dev-packages]
 
