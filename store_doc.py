@@ -11,12 +11,15 @@ from langchain_text_splitters import CharacterTextSplitter
 
 def ingest_docs():
     pdf_path="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/FMS MY.pdf"
+    pdf_path_2="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/Calculation Logic [MY].pdf"
     loader=PyPDFLoader(file_path=pdf_path)
+    loader2=PyPDFLoader(file_path=pdf_path_2)
     excelLoader = UnstructuredExcelLoader("/Users/myathtut/Desktop/Code/llm-fms-chat-bot/FMS_MY.xlsx")
     documents=loader.load()
+    documents2=loader2.load()
     excelLoad=excelLoader.load()
         
-    all_documents = excelLoad + documents
+    all_documents = excelLoad + documents+documents2
         
     text_splitter=CharacterTextSplitter(chunk_size=1000,chunk_overlap=30,separator="\n")
     docs=text_splitter.split_documents(documents=all_documents)
