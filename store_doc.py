@@ -23,9 +23,6 @@ def ingest_docs():
         
     embeddings=OpenAIEmbeddings()
     vectorstore=FAISS.from_documents(docs,embedding=embeddings)
-    vectorstore.save_local('faiss_index_react')
-        
-    FAISS.load_local("faiss_index_react",embeddings=embeddings,allow_dangerous_deserialization=True)
-
+    vectorstore.save_local(folder_path='/Users/myathtut/Desktop/Code/llm-fms-chat-bot/faiss_index_react',index_name="faiss_index_react")
 if __name__=="__main__":
     ingest_docs()
