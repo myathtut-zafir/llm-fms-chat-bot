@@ -21,6 +21,7 @@ networkx = "*"
 openpyxl = "*"
 streamlit = "*"
 streamlit-chat = "*"
+python-docx = "*"
 
 [dev-packages]
 
