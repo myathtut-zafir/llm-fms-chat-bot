@@ -4,22 +4,25 @@ from dotenv import load_dotenv
 load_dotenv()
 from langchain import hub
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.document_loaders import PyPDFLoader,UnstructuredExcelLoader
+from langchain_community.document_loaders import PyPDFLoader,UnstructuredExcelLoader,UnstructuredWordDocumentLoader
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import CharacterTextSplitter
 
 
 def ingest_docs():
     pdf_path="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/FMS MY.pdf"
+    word_path="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/[BRD] FMS MY.docx"
     pdf_path_2="/Users/myathtut/Desktop/Code/llm-fms-chat-bot/Calculation Logic [MY].pdf"
-    loader=PyPDFLoader(file_path=pdf_path)
+    # loader=PyPDFLoader(file_path=pdf_path)
     loader2=PyPDFLoader(file_path=pdf_path_2)
     excelLoader = UnstructuredExcelLoader("/Users/myathtut/Desktop/Code/llm-fms-chat-bot/FMS_MY.xlsx")
-    documents=loader.load()
+    wordLoader = UnstructuredWordDocumentLoader(word_path)
+    # documents=loader.load()
     documents2=loader2.load()
     excelLoad=excelLoader.load()
+    wordLoad=wordLoader.load()
         
-    all_documents = excelLoad + documents+documents2
+    all_documents = excelLoad +documents2+wordLoad
         
     text_splitter=CharacterTextSplitter(chunk_size=1000,chunk_overlap=30,separator="\n")
     docs=text_splitter.split_documents(documents=all_documents)
